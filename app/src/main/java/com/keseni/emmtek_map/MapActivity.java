@@ -83,6 +83,14 @@ public class MapActivity extends Activity {
             return true;
         }
 
+        if (id == R.id.action_phonenumber){
+            FragmentManager fragmentManager = getFragmentManager();
+            final PhoneConfigDialog phoneConfigDialog = new PhoneConfigDialog();
+            phoneConfigDialog.show(fragmentManager,"phoneconfig");
+
+            return true;
+        }
+
         return super.onOptionsItemSelected(item);
     }
 

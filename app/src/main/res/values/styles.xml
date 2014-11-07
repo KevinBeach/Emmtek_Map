@@ -4,5 +4,7 @@
     <style name="AppTheme" parent="android:Theme.Holo.Light.DarkActionBar">
         <!-- Customize your theme here. -->
     </style>
-
+    <style name="DialogFont">
+        <item name="android:textSize">20sp</item>
+    </style>
 </resources>

@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<TableLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent" android:layout_height="match_parent"
+    android:padding="20dp"
+    style="@style/DialogFont"
+    android:stretchColumns="2">
+
+    <TableRow
+        style="@style/DialogFont"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent">
+
+        <TextView
+            android:layout_gravity="center"
+            android:layout_column="1"
+            android:text="Latitude"/>
+        <TextView
+            android:id="@+id/dialog_lat"
+            android:layout_gravity="center"
+            />
+    </TableRow>
+    <TableRow
+        style="@style/DialogFont"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent">
+
+        <TextView
+            android:layout_gravity="center"
+            android:layout_column="1"
+            android:text="Longitude"/>
+        <TextView
+            android:layout_gravity="center"
+            android:id="@+id/dialog_lon"
+            />
+    </TableRow>
+    <TableRow
+        style="@style/DialogFont"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent">
+
+        <TextView
+            android:layout_gravity="center"
+            android:layout_column="1"
+            android:text="Speed"/>
+        <TextView
+            android:layout_gravity="center"
+            android:id="@+id/dialog_speed"
+            />
+    </TableRow>
+</TableLayout>

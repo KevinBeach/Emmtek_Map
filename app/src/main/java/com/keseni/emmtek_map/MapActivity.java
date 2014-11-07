@@ -5,6 +5,8 @@ import android.app.ActionBar;
 import android.app.Fragment;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -12,7 +14,9 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.os.Build;
+import android.widget.Toast;
 
+import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapFragment;
 import com.google.android.gms.maps.model.LatLng;
@@ -60,7 +64,16 @@ public class MapActivity extends Activity {
     }
 
     private void setUpMap() {
-        mMap.addMarker(new MarkerOptions().position(new LatLng(0,0)).title("marker"));
+        SharedPreferences sharedPreferences = getSharedPreferences("LocateData", Context.MODE_PRIVATE);
+        String mLat = sharedPreferences.getString("lat","0");
+        String mLon = sharedPreferences.getString("lon","0");
+        Double mDLat = (Double.parseDouble(mLat))/100;
+        Double mDLon = (Double.parseDouble(mLon))/100;
+        Toast.makeText(this, mDLon.toString(), Toast.LENGTH_LONG).show();
+        Toast.makeText(this,mDLat.toString(),Toast.LENGTH_LONG).show();
+        LatLng mLatLng = new LatLng(mDLat,mDLon);
+        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(mLatLng,10));
+        mMap.addMarker(new MarkerOptions().position(mLatLng).title("Last Location"));
     }
 
 
@@ -89,6 +102,12 @@ public class MapActivity extends Activity {
             phoneConfigDialog.show(fragmentManager,"phoneconfig");
 
             return true;
+        }
+
+        if (id == R.id.action_locationdata){
+            FragmentManager fragmentManager = getFragmentManager();
+            final LocationDataDialog locationDataDialog = new LocationDataDialog();
+            locationDataDialog.show(fragmentManager,"locationdatadialog");
         }
 
         return super.onOptionsItemSelected(item);

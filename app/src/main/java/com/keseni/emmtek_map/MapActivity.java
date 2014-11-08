@@ -28,6 +28,7 @@ public class MapActivity extends Activity {
     private static final String MAP_FRAGMENT_TAG = "map";
     private GoogleMap mMap;
     private MapFragment mMapFragment;
+    private SharedPreferences sharedPreferences;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,6 +46,19 @@ public class MapActivity extends Activity {
             fragmentTransaction.add(R.id.top_frame,mMapFragment,MAP_FRAGMENT_TAG);
             fragmentTransaction.commit();
         }
+        sharedPreferences = getSharedPreferences("LocateData", Context.MODE_PRIVATE);
+        SharedPreferences.OnSharedPreferenceChangeListener listener = new SharedPreferences.OnSharedPreferenceChangeListener() {
+
+            @Override
+            public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String s) {
+                String mLat = sharedPreferences.getString("lat","0");
+                String mLon = sharedPreferences.getString("lon","0");
+                String mTime = sharedPreferences.getString("time","0");
+                LatLng mLatLng = find_coordinate(mLat,mLon);
+                mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(mLatLng,15));
+                mMap.addMarker(new MarkerOptions().position(mLatLng).title("Location taken at :"+mTime));
+            }
+        };
         setUpMapIfNeeded();
     }
 
@@ -52,6 +66,9 @@ public class MapActivity extends Activity {
     protected void onResume() {
         super.onResume();
         setUpMapIfNeeded();
+        // revisit the location data
+        if(mMap != null)
+            setUpMap();
     }
 
     private void setUpMapIfNeeded() {
@@ -64,16 +81,13 @@ public class MapActivity extends Activity {
     }
 
     private void setUpMap() {
-        SharedPreferences sharedPreferences = getSharedPreferences("LocateData", Context.MODE_PRIVATE);
+        //SharedPreferences sharedPreferences = getSharedPreferences("LocateData", Context.MODE_PRIVATE);
         String mLat = sharedPreferences.getString("lat","0");
         String mLon = sharedPreferences.getString("lon","0");
-        Double mDLat = (Double.parseDouble(mLat))/100;
-        Double mDLon = (Double.parseDouble(mLon))/100;
-        Toast.makeText(this, mDLon.toString(), Toast.LENGTH_LONG).show();
-        Toast.makeText(this,mDLat.toString(),Toast.LENGTH_LONG).show();
-        LatLng mLatLng = new LatLng(mDLat,mDLon);
-        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(mLatLng,10));
-        mMap.addMarker(new MarkerOptions().position(mLatLng).title("Last Location"));
+        String mTime = sharedPreferences.getString("time","0");
+        LatLng mLatLng = find_coordinate(mLat,mLon);
+        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(mLatLng,15));
+        mMap.addMarker(new MarkerOptions().position(mLatLng).title("Location taken at :"+mTime));
     }
 
 
@@ -112,6 +126,16 @@ public class MapActivity extends Activity {
 
         return super.onOptionsItemSelected(item);
     }
+
+    public LatLng find_coordinate(String lat, String lon){
+        Double mDLat = (Double.parseDouble(lat))/100;
+        Double mDLon = (Double.parseDouble(lon))/100;
+        //Toast.makeText(this, mDLon.toString(), Toast.LENGTH_LONG).show();
+        //Toast.makeText(this,mDLat.toString(),Toast.LENGTH_LONG).show();
+        LatLng mLatLng = new LatLng(mDLat,mDLon);
+        return mLatLng;
+    }
+
 
 
 }

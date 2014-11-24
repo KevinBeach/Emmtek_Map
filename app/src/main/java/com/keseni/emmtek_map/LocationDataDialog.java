@@ -17,6 +17,9 @@ public class LocationDataDialog extends DialogFragment{
     TextView tLat;
     TextView tLon;
     TextView tSpeed;
+    TextView tTime;
+    TextView tVin;
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -25,6 +28,8 @@ public class LocationDataDialog extends DialogFragment{
         tLat = (TextView) view.findViewById(R.id.dialog_lat);
         tLon = (TextView) view.findViewById(R.id.dialog_lon);
         tSpeed = (TextView) view.findViewById(R.id.dialog_speed);
+        tTime = (TextView) view.findViewById(R.id.dialog_time);
+        tVin = (TextView) view.findViewById(R.id.vin);
 
         // open up the preferences file
         final SharedPreferences sharedPreferences = getActivity().getSharedPreferences("LocateData", Context.MODE_PRIVATE);
@@ -32,10 +37,15 @@ public class LocationDataDialog extends DialogFragment{
         String mLat = sharedPreferences.getString("lat","N/A");
         String mLon = sharedPreferences.getString("lon","N/A");
         String mSpeed = sharedPreferences.getString("speed","N/A");
+        String mTime = sharedPreferences.getString("time","N/A");
+        String mVin = sharedPreferences.getString("vin","N/A");
+
         // Set these parameters
         tLat.setText(mLat);
         tLon.setText(mLon);
         tSpeed.setText(mSpeed);
+        tTime.setText(mTime);
+        tVin.setText(mVin);
         
         return view;
     }

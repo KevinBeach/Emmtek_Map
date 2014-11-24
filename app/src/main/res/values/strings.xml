@@ -13,5 +13,9 @@
     <string name="time_ref_string">Time</string>
     <string name="voltage_ref_string">VIN</string>
     <string name="dialog_latitude_text">Latitude</string>
+    <string name="latitude">Latitude</string>
+    <string name="longitude">Longitude</string>
+    <string name="speed">Speed</string>
+    <string name="voltage">Voltage</string>
 
 </resources>

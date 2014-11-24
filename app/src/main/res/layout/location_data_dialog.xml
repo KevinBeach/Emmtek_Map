@@ -4,7 +4,24 @@
     android:padding="20dp"
     style="@style/DialogFont"
     android:stretchColumns="2">
+    <TableRow
+        style="@style/DialogFont"
+        android:paddingBottom="20dp"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent">
 
+        <TextView
+            android:layout_gravity="center"
+            android:layout_column="1"
+            android:textStyle="bold"
+            android:text="Time of location fix"/>
+        <TextView
+            android:id="@+id/dialog_time"
+            android:textStyle="bold"
+            android:layout_gravity="center"
+            />
+
+    </TableRow>
     <TableRow
         style="@style/DialogFont"
         android:layout_width="fill_parent"
@@ -13,7 +30,7 @@
         <TextView
             android:layout_gravity="center"
             android:layout_column="1"
-            android:text="Latitude"/>
+            android:text="@string/latitude"/>
         <TextView
             android:id="@+id/dialog_lat"
             android:layout_gravity="center"
@@ -27,11 +44,25 @@
         <TextView
             android:layout_gravity="center"
             android:layout_column="1"
-            android:text="Longitude"/>
+            android:text="@string/longitude"/>
         <TextView
             android:layout_gravity="center"
             android:id="@+id/dialog_lon"
             />
+    </TableRow>
+    <TableRow
+    style="@style/DialogFont"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent">
+
+    <TextView
+        android:layout_gravity="center"
+        android:layout_column="1"
+        android:text="@string/speed"/>
+    <TextView
+        android:layout_gravity="center"
+        android:id="@+id/dialog_speed"
+        />
     </TableRow>
     <TableRow
         style="@style/DialogFont"
@@ -41,10 +72,10 @@
         <TextView
             android:layout_gravity="center"
             android:layout_column="1"
-            android:text="Speed"/>
+            android:text="@string/voltage"/>
         <TextView
             android:layout_gravity="center"
-            android:id="@+id/dialog_speed"
+            android:id="@+id/vin"
             />
     </TableRow>
 </TableLayout>

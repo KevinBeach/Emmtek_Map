@@ -20,6 +20,7 @@ import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapFragment;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 
 
@@ -56,7 +57,7 @@ public class MapActivity extends Activity {
                 String mTime = sharedPreferences.getString("time","0");
                 LatLng mLatLng = find_coordinate(mLat,mLon);
                 mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(mLatLng,15));
-                mMap.addMarker(new MarkerOptions().position(mLatLng).title("Location taken at :"+mTime));
+                mMap.addMarker(new MarkerOptions().position(mLatLng));
             }
         };
         setUpMapIfNeeded();
@@ -87,7 +88,16 @@ public class MapActivity extends Activity {
         String mTime = sharedPreferences.getString("time","0");
         LatLng mLatLng = find_coordinate(mLat,mLon);
         mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(mLatLng,15));
-        mMap.addMarker(new MarkerOptions().position(mLatLng).title("Location taken at :"+mTime));
+        mMap.addMarker(new MarkerOptions().position(mLatLng));
+        mMap.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
+            @Override
+            public boolean onMarkerClick(Marker marker) {
+                FragmentManager fragmentManager = getFragmentManager();
+                final LocationDataDialog locationDataDialog = new LocationDataDialog();
+                locationDataDialog.show(fragmentManager,"locationdatadialog");
+                return false;
+            }
+        });
     }
 
 

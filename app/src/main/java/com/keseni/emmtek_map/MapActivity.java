@@ -138,8 +138,19 @@ public class MapActivity extends Activity {
     }
 
     public LatLng find_coordinate(String lat, String lon){
-        Double mDLat = (Double.parseDouble(lat))/100;
-        Double mDLon = (Double.parseDouble(lon))/100;
+        Double mDLat;
+        Double mDLon;
+
+        LatLonParser latLonParser = new LatLonParser(lat,lon);
+
+        if (!latLonParser.ConvToDouble()){
+            Toast.makeText(this, "Incorrect co-ordinates", Toast.LENGTH_LONG).show();
+           return (new LatLng(0,0));
+        }
+
+        mDLat = latLonParser.GetdLat();
+        mDLon = latLonParser.GetdLon();
+        
         //Toast.makeText(this, mDLon.toString(), Toast.LENGTH_LONG).show();
         //Toast.makeText(this,mDLat.toString(),Toast.LENGTH_LONG).show();
         LatLng mLatLng = new LatLng(mDLat,mDLon);

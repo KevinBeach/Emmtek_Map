@@ -62,7 +62,7 @@ public class SmsReceiver extends BroadcastReceiver {
                         if (messageReceived.indexOf(strCheck) > -1) {
                             //Take the 8 digit latitude reference
                             String mLat = messageReceived.substring((messageReceived.indexOf(strCheck) + 4), (messageReceived.indexOf(strCheck) + 14));
-                            Toast.makeText(context, mLat, Toast.LENGTH_LONG).show();
+                            //Toast.makeText(context, mLat, Toast.LENGTH_LONG).show();
                             editor.putString("lat",mLat);
                         }
 
@@ -70,28 +70,28 @@ public class SmsReceiver extends BroadcastReceiver {
                         if (messageReceived.indexOf(strCheck) > -1) {
                             //Take the 8 digit longitude reference
                             String mLon = messageReceived.substring((messageReceived.indexOf(strCheck) + 4), (messageReceived.indexOf(strCheck) + 14));
-                            Toast.makeText(context, mLon, Toast.LENGTH_LONG).show();
+                            //Toast.makeText(context, mLon, Toast.LENGTH_LONG).show();
                             editor.putString("lon",mLon);
                         }
                         strCheck = context.getString(R.string.voltage_ref_string);
                         if (messageReceived.indexOf(strCheck) > -1) {
                             //Take the 8 digit longitude reference
                             String mVin = messageReceived.substring((messageReceived.indexOf(strCheck) + 4), (messageReceived.indexOf(strCheck) + 9));
-                            Toast.makeText(context, mVin, Toast.LENGTH_LONG).show();
+                            //Toast.makeText(context, mVin, Toast.LENGTH_LONG).show();
                             editor.putString("vin",mVin);
                         }
                         strCheck = context.getString(R.string.speed_ref_string);
                         if (messageReceived.indexOf(strCheck) > -1) {
                             //Take the 8 digit longitude reference
                             String mSpeed = messageReceived.substring((messageReceived.indexOf(strCheck) + 6), (messageReceived.indexOf(strCheck) + 9));
-                            Toast.makeText(context, mSpeed, Toast.LENGTH_LONG).show();
+                            //Toast.makeText(context, mSpeed, Toast.LENGTH_LONG).show();
                             editor.putString("speed",mSpeed);
                         }
                         strCheck = context.getString(R.string.time_ref_string);
                         if (messageReceived.indexOf(strCheck) > -1) {
                             //Take the 8 digit longitude reference
                             String mTime = messageReceived.substring((messageReceived.indexOf(strCheck) + 5), (messageReceived.indexOf(strCheck) + 13));
-                            Toast.makeText(context, mTime, Toast.LENGTH_LONG).show();
+                            //Toast.makeText(context, mTime, Toast.LENGTH_LONG).show();
                             editor.putString("time",mTime);
                         }
                         editor.commit();

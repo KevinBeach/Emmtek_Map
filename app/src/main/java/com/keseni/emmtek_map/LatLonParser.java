@@ -8,59 +8,42 @@ import android.widget.Toast;
  */
 public class LatLonParser {
 
-    private static final int SCALING_VALUE = 100; // Scaling value for lat and lon from unit
+
     private String sLat;
     private String sLon;
     private Double dLat;
     private Double dLon;
 
-    // constructors, can use two strings for lat, lon or just one string if one parameter to parse
+    // constructors,  use two strings for lat, lon
     LatLonParser(String lat, String lon){
         sLat = lat;
         sLon = lon;
     }
-    LatLonParser(String latlon){
-        sLat = sLon = latlon;
-    }
+
 
     Double GetdLat (){
-        return dLat/SCALING_VALUE;
+        return dLat;
     }
 
     Double GetdLon (){
-        return dLon/SCALING_VALUE;
+        return dLon;
     }
     Boolean ConvToDouble () {
 
-        //trim the last character if it is a non-numeric number
-        if (!CheckForChar(sLat)) {
-            sLat = sLat.substring(0,sLat.length()-1);
-            if (!CheckForChar(sLat))
-                return false;
-        }
-        if (!CheckForChar(sLon)) {
-            sLon = sLon.substring(0,sLon.length()-1);
-            if (!CheckForChar(sLon))
-                return false;
-        }
+       // first check is to make sure that slat and slon are not null
+        if (sLat==null || sLon==null) return false;
+        // next check that sLat is 10 characters (including N/S char) and sLon is 11 characters
+        // including E/W char
+        if(sLat.length() != 10 && sLon.length() != 11) return false;
 
-        // change global dLat dLon to the value in sLat and sLon
-        // error catching returns a false.
+        // Now convert to a double using the last character to determine sign
 
-        try {
-            dLat = Double.parseDouble(sLat);
-            dLon = Double.parseDouble(sLon);
-        } catch (NumberFormatException e) {
-            dLat.equals("0");
-            dLon.equals("0");
-            return false;
-        } catch (NullPointerException e) {
-            dLat.equals("0");
-            dLon.equals("0");
-            return false;
-        } catch (Exception e) {
-            return false;
-        }
+        dLat = (Double.parseDouble(sLat.substring(0,2))) + (Double.parseDouble(sLat.substring(2,9)) / 60);
+        dLon = (Double.parseDouble(sLon.substring(0,3))) + (Double.parseDouble(sLon.substring(3,10)) / 60);
+
+        if (sLat.substring(9).equals("S")) dLat = dLat * -1;
+        if (sLon.substring(10).equals("W")) dLon = dLon * -1;
+
         return true;
     }
     Boolean CheckForChar (String string){

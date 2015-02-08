@@ -18,4 +18,30 @@
     <string name="speed">Speed</string>
     <string name="voltage">Voltage</string>
 
+    <!-- Items in order from the server push -->
+    <string-array name="serverpushpreferenceitems">
+        <item>DeviceName</item>
+        <item>Imei</item>
+        <item>Time</item>
+        <item>Lat</item>
+        <item>Lon</item>
+        <item>Speed</item>
+        <item>Vin</item>
+        <item>Vstatus</item>
+        <item>A1</item>
+        <item>A1status</item>
+        <item>A2</item>
+        <item>A2Status</item>
+        <item>A3</item>
+        <item>A3Status</item>
+        <item>D1</item>
+        <item>D1Status</item>
+        <item>D2</item>
+        <item>D2Status</item>
+        <item>Relay1</item>
+        <item>Relay2</item>
+        <item>Out1</item>
+        <item>Out2</item>
+        <item>MoveStatus</item>
+    </string-array>
 </resources>

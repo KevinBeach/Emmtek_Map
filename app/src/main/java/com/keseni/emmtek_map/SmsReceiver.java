@@ -8,30 +8,33 @@ import android.os.Bundle;
 import android.telephony.SmsMessage;
 import android.widget.Toast;
 
+import java.util.List;
+
 /**
  * Created by kbeach on 23/09/2014.
  */
 public class SmsReceiver extends BroadcastReceiver {
+    SharedPreferences sharedPreferences;
     @Override
     public void onReceive(Context context, Intent intent) {
         Bundle bundle = intent.getExtras();
         SmsMessage[] msgs = null;
         String messageReceived = "";
-        if(bundle != null)
-        {
+        if (bundle != null) {
             // retrieve SMS received
             Object[] pdus = (Object[]) bundle.get("pdus");
             msgs = new SmsMessage[pdus.length];
-            for (int i=0; i<msgs.length; i++){
+            for (int i = 0; i < msgs.length; i++) {
                 msgs[i] = SmsMessage.createFromPdu((byte[]) pdus[i]);
                 messageReceived += msgs[i].getMessageBody().toString();
                 messageReceived += "\n";
             }
             // get the telephone number from preferences
-            SharedPreferences sharedPreferences = context.getSharedPreferences("LocateData", Context.MODE_PRIVATE);
+
+            sharedPreferences = context.getSharedPreferences("LocateData", Context.MODE_PRIVATE);
             String mPhoneNumber;
-            mPhoneNumber = sharedPreferences.getString("phone","Default");
-            String senderPhoneNumber=msgs[0].getOriginatingAddress();
+            mPhoneNumber = sharedPreferences.getString("phone", "Default");
+            String senderPhoneNumber = msgs[0].getOriginatingAddress();
             // Test toasts to verify phone numbers
             //Toast.makeText(context, "senderPhoneNumber " + senderPhoneNumber, Toast.LENGTH_SHORT).show();
             //Toast.makeText(context, "mPhoneNumber " + mPhoneNumber, Toast.LENGTH_SHORT).show();
@@ -45,69 +48,35 @@ public class SmsReceiver extends BroadcastReceiver {
                     // Add in error traps as well
 
                     if (mPhoneNumber.substring(mPhoneNumber.length() - 10).equals(senderPhoneNumber.substring(senderPhoneNumber.length() - 10))) {
+                        // Check the message to see if it is a server push
+                        int count = messageReceived.length() - messageReceived.replace(",", "").length();
+                        if (count == R.integer.NO_OF_COMMAS) {
+                            // This is the format for a server push
+                            // Now create the serverpush object with messageReceived
+                            EmmTekServerData emmTekServerData = new EmmTekServerData(messageReceived);
+                            Boolean write_done = Write_To_Preferences(emmTekServerData);
 
-                        //display SMS message
-                       // Toast.makeText(context, messageReceived, Toast.LENGTH_SHORT).show();
-                        //get the HTTP address from message - strCheck validates address
-                        String strCheck = context.getString(R.string.http_ref_string);
-                        //Open up the sharedpreferences editor
-                        SharedPreferences.Editor editor = sharedPreferences.edit();
-
-                        if(messageReceived.indexOf(strCheck) > -1) {
-                            String mapAddress = messageReceived.substring(messageReceived.indexOf(strCheck));
-                            //Toast.makeText(context, mapAddress, Toast.LENGTH_LONG).show();
-                            editor.putString("mapaddress",mapAddress);
                         }
-                        strCheck = context.getString(R.string.lat_ref_string);
-                        if (messageReceived.indexOf(strCheck) > -1) {
-                            //Take the 8 digit latitude reference
-                            String mLat = messageReceived.substring((messageReceived.indexOf(strCheck) + 4), (messageReceived.indexOf(strCheck) + 14));
-                            //Toast.makeText(context, mLat, Toast.LENGTH_LONG).show();
-                            editor.putString("lat",mLat);
-                        }
-
-                        strCheck = context.getString(R.string.lon_ref_string);
-                        if (messageReceived.indexOf(strCheck) > -1) {
-                            //Take the 8 digit longitude reference
-                            String mLon = messageReceived.substring((messageReceived.indexOf(strCheck) + 4), (messageReceived.indexOf(strCheck) + 14));
-                            //Toast.makeText(context, mLon, Toast.LENGTH_LONG).show();
-                            editor.putString("lon",mLon);
-                        }
-                        strCheck = context.getString(R.string.voltage_ref_string);
-                        if (messageReceived.indexOf(strCheck) > -1) {
-                            //Take the 8 digit longitude reference
-                            String mVin = messageReceived.substring((messageReceived.indexOf(strCheck) + 4), (messageReceived.indexOf(strCheck) + 9));
-                            //Toast.makeText(context, mVin, Toast.LENGTH_LONG).show();
-                            editor.putString("vin",mVin);
-                        }
-                        strCheck = context.getString(R.string.speed_ref_string);
-                        if (messageReceived.indexOf(strCheck) > -1) {
-                            //Take the 8 digit longitude reference
-                            String mSpeed = messageReceived.substring((messageReceived.indexOf(strCheck) + 6), (messageReceived.indexOf(strCheck) + 9));
-                            //Toast.makeText(context, mSpeed, Toast.LENGTH_LONG).show();
-                            editor.putString("speed",mSpeed);
-                        }
-                        strCheck = context.getString(R.string.time_ref_string);
-                        if (messageReceived.indexOf(strCheck) > -1) {
-                            //Take the 8 digit longitude reference
-                            String mTime = messageReceived.substring((messageReceived.indexOf(strCheck) + 5), (messageReceived.indexOf(strCheck) + 13));
-                            //Toast.makeText(context, mTime, Toast.LENGTH_LONG).show();
-                            editor.putString("time",mTime);
-                        }
-                        editor.commit();
-
-
-
-
-                    } else {
-                        Toast.makeText(context, "Different phone number", Toast.LENGTH_SHORT).show();
                     }
                 }
             }
-
-            //get the sender phone number
-
-
         }
+    }
+
+    private Boolean Write_To_Preferences(EmmTekServerData emmTekServerData) {
+
+        // write to preferences the emmTekServerData information
+
+        String serverPushItems[] = new String[R.array.serverpushpreferenceitems];
+        List<String> items;
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+
+        items = emmTekServerData.getItems();
+
+        for (int i = 0; i <= items.size() && i <= serverPushItems.length; i++){
+            editor.putString(serverPushItems[i],items.get(i));
+            editor.commit();
+        }
+        return true;
     }
 }

@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+    <resources>
+    <!-- NO_OF_COMMAS is a constant which stores the number of commas in a serverpush SMS -->
+        <integer name="NO_OF_COMMAS">26</integer>
+
+    </resources>
+

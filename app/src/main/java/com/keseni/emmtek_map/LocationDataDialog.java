@@ -34,11 +34,11 @@ public class LocationDataDialog extends DialogFragment{
         // open up the preferences file
         final SharedPreferences sharedPreferences = getActivity().getSharedPreferences("LocateData", Context.MODE_PRIVATE);
         // Get Latitude, Longitude and speed
-        String mLat = sharedPreferences.getString("lat","N/A");
-        String mLon = sharedPreferences.getString("lon","N/A");
-        String mSpeed = sharedPreferences.getString("speed","N/A");
-        String mTime = sharedPreferences.getString("time","N/A");
-        String mVin = sharedPreferences.getString("vin","N/A");
+        String mLat = sharedPreferences.getString("Lat","N/A");
+        String mLon = sharedPreferences.getString("Lon","N/A");
+        String mSpeed = sharedPreferences.getString("Speed","N/A");
+        String mTime = sharedPreferences.getString("Time","N/A");
+        String mVin = sharedPreferences.getString("Vin","N/A");
 
         // Set these parameters
         tLat.setText(mLat);

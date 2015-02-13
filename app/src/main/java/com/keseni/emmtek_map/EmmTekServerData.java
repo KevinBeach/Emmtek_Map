@@ -35,7 +35,7 @@ public class EmmTekServerData {
     public EmmTekServerData(String messageReceived) {
         // first check the number of commas in the string to determine a valid server push
         int count = messageReceived.length() - messageReceived.replace(",", "").length();
-        if (count == R.integer.NO_OF_COMMAS) {
+        if (count == Constants.NO_OF_COMMAS) {
             //the message is valid
             //split the String into a string array to allow it to be used with the objects
 
@@ -57,10 +57,10 @@ public class EmmTekServerData {
                 mDValue[(loop - 14) / 2] = items.get(loop);
                 mDStatus[(loop - 14) /2] = items.get(loop+1);
             }
-            mRelay[1] = items.get(18);
-            mRelay[2] = items.get(19);
-            mOut[1] = items.get(20);
-            mOut[2] = items.get(21);
+            mRelay[0] = items.get(18);
+            mRelay[1] = items.get(19);
+            mOut[0] = items.get(20);
+            mOut[1] = items.get(21);
             mMoveStatus = items.get(22);
 
         }else

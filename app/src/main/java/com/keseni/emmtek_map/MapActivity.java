@@ -27,6 +27,7 @@ import com.google.android.gms.maps.model.MarkerOptions;
 public class MapActivity extends Activity {
 
     private static final String MAP_FRAGMENT_TAG = "map";
+
     private GoogleMap mMap;
     private MapFragment mMapFragment;
     private SharedPreferences sharedPreferences;
@@ -52,9 +53,9 @@ public class MapActivity extends Activity {
 
             @Override
             public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String s) {
-                String mLat = sharedPreferences.getString("lat","0");
-                String mLon = sharedPreferences.getString("lon","0");
-                String mTime = sharedPreferences.getString("time","0");
+                String mLat = sharedPreferences.getString("Lat","0");
+                String mLon = sharedPreferences.getString("Lon","0");
+                String mTime = sharedPreferences.getString("Time","0");
                 LatLng mLatLng = find_coordinate(mLat,mLon);
                 mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(mLatLng,15));
                 mMap.addMarker(new MarkerOptions().position(mLatLng));
@@ -83,9 +84,9 @@ public class MapActivity extends Activity {
 
     private void setUpMap() {
         //SharedPreferences sharedPreferences = getSharedPreferences("LocateData", Context.MODE_PRIVATE);
-        String mLat = sharedPreferences.getString("lat","0");
-        String mLon = sharedPreferences.getString("lon","0");
-        String mTime = sharedPreferences.getString("time","0");
+        String mLat = sharedPreferences.getString("Lat","0");
+        String mLon = sharedPreferences.getString("Lon","0");
+        String mTime = sharedPreferences.getString("Time","0");
         LatLng mLatLng = find_coordinate(mLat,mLon);
         mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(mLatLng,15));
         mMap.addMarker(new MarkerOptions().position(mLatLng));

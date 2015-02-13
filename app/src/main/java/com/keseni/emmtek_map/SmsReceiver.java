@@ -6,8 +6,11 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.telephony.SmsMessage;
+import android.util.Log;
 import android.widget.Toast;
 
+
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -15,8 +18,10 @@ import java.util.List;
  */
 public class SmsReceiver extends BroadcastReceiver {
     SharedPreferences sharedPreferences;
+    Context context;
     @Override
     public void onReceive(Context context, Intent intent) {
+        this.context = context;
         Bundle bundle = intent.getExtras();
         SmsMessage[] msgs = null;
         String messageReceived = "";
@@ -39,20 +44,27 @@ public class SmsReceiver extends BroadcastReceiver {
             //Toast.makeText(context, "senderPhoneNumber " + senderPhoneNumber, Toast.LENGTH_SHORT).show();
             //Toast.makeText(context, "mPhoneNumber " + mPhoneNumber, Toast.LENGTH_SHORT).show();
             // Check the phone numbers are greater than 10 digits
-            if (mPhoneNumber.length() > 10) {
+            if (mPhoneNumber.length() > 10 || Constants.DEBUG_OVERRIDE) {
 
-                if (senderPhoneNumber.length() > 10) {
+                if (senderPhoneNumber.length() > 10 || Constants.DEBUG_OVERRIDE) {
 
                     //Use only the last 10 digits to allow both +44 and 0 to register as the same phone number
                     // This will only work in the UK! Looks to see if you can remove the country code??
                     // Add in error traps as well
+                    boolean phoneNumberEqual;
+                    if (Constants.DEBUG_OVERRIDE)
+                        phoneNumberEqual = true;
+                    else
+                        phoneNumberEqual = mPhoneNumber.substring(mPhoneNumber.length() - 10).equals(senderPhoneNumber.substring(senderPhoneNumber.length() - 10));
 
-                    if (mPhoneNumber.substring(mPhoneNumber.length() - 10).equals(senderPhoneNumber.substring(senderPhoneNumber.length() - 10))) {
+                    if (phoneNumberEqual) {
                         // Check the message to see if it is a server push
                         int count = messageReceived.length() - messageReceived.replace(",", "").length();
-                        if (count == R.integer.NO_OF_COMMAS) {
+                        if (count == Constants.NO_OF_COMMAS) {
                             // This is the format for a server push
                             // Now create the serverpush object with messageReceived
+                            if(Constants.TOASTS_ON)
+                                Toast.makeText(context, "Server Push Received on " + senderPhoneNumber.toString(),Toast.LENGTH_SHORT).show();
                             EmmTekServerData emmTekServerData = new EmmTekServerData(messageReceived);
                             Boolean write_done = Write_To_Preferences(emmTekServerData);
 
@@ -67,16 +79,25 @@ public class SmsReceiver extends BroadcastReceiver {
 
         // write to preferences the emmTekServerData information
 
-        String serverPushItems[] = new String[R.array.serverpushpreferenceitems];
+
+        String serverPushItems[] = context.getResources().getStringArray(R.array.serverpushpreferenceitems);
+
+
+
         List<String> items;
         SharedPreferences.Editor editor = sharedPreferences.edit();
 
         items = emmTekServerData.getItems();
 
-        for (int i = 0; i <= items.size() && i <= serverPushItems.length; i++){
+        for (int i = 0; i < items.size() && i < serverPushItems.length; i++){
             editor.putString(serverPushItems[i],items.get(i));
-            editor.commit();
+            if(Constants.LOGGING_ON)
+                Log.d(serverPushItems[i],items.get(i));
+            if (Constants.TOASTS_ON)
+                Toast.makeText(context, serverPushItems[i] + " : " + items.get(i), Toast.LENGTH_SHORT).show();
+
         }
+        editor.commit();
         return true;
     }
 }

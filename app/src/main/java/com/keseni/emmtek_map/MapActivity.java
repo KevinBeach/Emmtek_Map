@@ -61,6 +61,7 @@ public class MapActivity extends Activity {
                 mMap.addMarker(new MarkerOptions().position(mLatLng));
             }
         };
+        sharedPreferences.registerOnSharedPreferenceChangeListener(listener);
         setUpMapIfNeeded();
     }
 

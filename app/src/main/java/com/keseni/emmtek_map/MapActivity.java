@@ -31,7 +31,7 @@ public class MapActivity extends Activity {
     private GoogleMap mMap;
     private MapFragment mMapFragment;
     private SharedPreferences sharedPreferences;
-
+    private SharedPreferences.OnSharedPreferenceChangeListener listener;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -48,8 +48,10 @@ public class MapActivity extends Activity {
             fragmentTransaction.add(R.id.top_frame,mMapFragment,MAP_FRAGMENT_TAG);
             fragmentTransaction.commit();
         }
+
+        // set up shared preferences listener - map auto updates when new position is stored
         sharedPreferences = getSharedPreferences("LocateData", Context.MODE_PRIVATE);
-        SharedPreferences.OnSharedPreferenceChangeListener listener = new SharedPreferences.OnSharedPreferenceChangeListener() {
+        listener = new SharedPreferences.OnSharedPreferenceChangeListener() {
 
             @Override
             public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String s) {
@@ -57,7 +59,7 @@ public class MapActivity extends Activity {
                 String mLon = sharedPreferences.getString("Lon","0");
                 String mTime = sharedPreferences.getString("Time","0");
                 LatLng mLatLng = find_coordinate(mLat,mLon);
-                mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(mLatLng,15));
+                mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(mLatLng, 15));
                 mMap.addMarker(new MarkerOptions().position(mLatLng));
             }
         };

@@ -32,6 +32,8 @@ public class MapActivity extends Activity {
     private MapFragment mMapFragment;
     private SharedPreferences sharedPreferences;
     private SharedPreferences.OnSharedPreferenceChangeListener listener;
+    private Marker marker = null;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -55,12 +57,13 @@ public class MapActivity extends Activity {
 
             @Override
             public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String s) {
+                mMap.clear();
                 String mLat = sharedPreferences.getString("Lat","0");
                 String mLon = sharedPreferences.getString("Lon","0");
                 String mTime = sharedPreferences.getString("Time","0");
                 LatLng mLatLng = find_coordinate(mLat,mLon);
                 mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(mLatLng, 15));
-                mMap.addMarker(new MarkerOptions().position(mLatLng));
+                marker = mMap.addMarker(new MarkerOptions().position(mLatLng));
             }
         };
         sharedPreferences.registerOnSharedPreferenceChangeListener(listener);
@@ -92,7 +95,7 @@ public class MapActivity extends Activity {
         String mTime = sharedPreferences.getString("Time","0");
         LatLng mLatLng = find_coordinate(mLat,mLon);
         mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(mLatLng,15));
-        mMap.addMarker(new MarkerOptions().position(mLatLng));
+        marker = mMap.addMarker(new MarkerOptions().position(mLatLng));
         mMap.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
             @Override
             public boolean onMarkerClick(Marker marker) {

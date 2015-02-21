@@ -1,13 +1,17 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools" tools:context=".MapActivity">
     <item android:id="@+id/action_phonenumber"
-        android:title="SMS Phone Number"
+        android:title="@string/action_phonenumber"
         android:orderInCategory="100"
         android:showAsAction="never"/>
     <item android:id="@+id/action_locationdata"
-        android:title="Location Data"
+        android:title="@string/action_locationdata"
         android:orderInCategory="100"
         android:showAsAction="never"/>
+    <item android:id="@+id/action_geofence"
+        android:title="@string/action_geofence"
+        android:showAsAction="never"
+        android:orderInCategory="100"/>
     <item android:id="@+id/action_settings" android:title="@string/action_settings"
         android:orderInCategory="100" android:showAsAction="never" />
 </menu>

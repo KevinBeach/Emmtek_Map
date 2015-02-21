@@ -17,6 +17,9 @@
     <string name="longitude">Longitude</string>
     <string name="speed">Speed</string>
     <string name="voltage">Voltage</string>
+    <string name="action_geofence">Geofence Settings</string>
+    <string name="action_locationdata">Location Data</string>
+    <string name="action_phonenumber">SMS Phone Number</string>
 
     <!-- Items in order from the server push -->
     <string-array name="serverpushpreferenceitems">
@@ -44,4 +47,7 @@
         <item>Out2</item>
         <item>MoveStatus</item>
     </string-array>
+
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+
 </resources>

@@ -57,6 +57,7 @@ public class MapActivity extends Activity {
 
             @Override
             public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String s) {
+                //Clear the existing marker
                 mMap.clear();
                 String mLat = sharedPreferences.getString("Lat","0");
                 String mLon = sharedPreferences.getString("Lon","0");
@@ -124,6 +125,9 @@ public class MapActivity extends Activity {
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
+            FragmentManager fragmentManager = getFragmentManager();
+            final SettingsDialog settingsDialog = new SettingsDialog();
+            settingsDialog.show(fragmentManager,"settingdialog");
             return true;
         }
 

@@ -35,9 +35,9 @@ public class SettingsDialog extends DialogFragment {
         vibrate = (CheckBox) view.findViewById(R.id.checkVibrate);
         ok = (Button) view.findViewById(R.id.setting_dialog_OK);
         cancel = (Button) view.findViewById(R.id.setting_dialog_Cancel);
-        gpsNotification.setChecked(sharedPreferences.getBoolean("GpsNotification",false));
-        alarmNotification.setChecked(sharedPreferences.getBoolean("AlarmNotification",false));
-        vibrate.setChecked(sharedPreferences.getBoolean("VibrateNotification",false));
+        gpsNotification.setChecked(sharedPreferences.getBoolean("GpsNotification",true));
+        alarmNotification.setChecked(sharedPreferences.getBoolean("AlarmNotification",true));
+        vibrate.setChecked(sharedPreferences.getBoolean("VibrateNotification",true));
 
         ok.setOnClickListener(new View.OnClickListener() {
             @Override

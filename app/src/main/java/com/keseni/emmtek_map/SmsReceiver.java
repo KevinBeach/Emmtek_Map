@@ -8,6 +8,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.Resources;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.NotificationCompat;
 import android.telephony.SmsMessage;
@@ -72,21 +73,28 @@ public class SmsReceiver extends BroadcastReceiver {
                                 Toast.makeText(context, "Server Push Received on " + senderPhoneNumber.toString(),Toast.LENGTH_SHORT).show();
                             EmmTekServerData emmTekServerData = new EmmTekServerData(messageReceived);
                             Boolean write_done = Write_To_Preferences(emmTekServerData);
-                            
-                            // Now set up a notification for a server push
-                            // First set up pending intent
 
-                            Intent i = new Intent(context,MapActivity.class);
-                            PendingIntent pi = PendingIntent.getActivity(context,0,i,0);
-                            Notification notification = new NotificationCompat.Builder(context)
-                                    .setTicker("Emmtek Data Received")
-                                    .setSmallIcon(R.drawable.ic_launcher)
-                                    .setContentTitle("SMS received")
-                                    .setContentIntent(pi)
-                                    .setAutoCancel(true)
-                                    .build();
-                            NotificationManager notificationManager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
-                            notificationManager.notify(0,notification);
+                            // Now set up a notification for a server push
+                            //Check the setting in shared preferences and application not visible
+
+                            if(sharedPreferences.getBoolean("GpsNotification",true) && !Globals.isVisible) {
+
+                                // First set up pending intent
+
+                                Intent i = new Intent(context, MapActivity.class);
+                                PendingIntent pi = PendingIntent.getActivity(context, 0, i, 0);
+
+                                Notification notification = new NotificationCompat.Builder(context)
+                                        .setTicker("Emmtek Data Received")
+                                        .setSmallIcon(R.drawable.ic_launcher)
+                                        .setContentTitle("SMS received")
+                                        .setContentIntent(pi)
+                                        .setSound(Uri.parse("android.resource://com.keseni.emmtek_map/" + R.raw.alarm))
+                                        .setAutoCancel(true)
+                                        .build();
+                                NotificationManager notificationManager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
+                                notificationManager.notify(0, notification);
+                            }
                         }
                     }
                 }

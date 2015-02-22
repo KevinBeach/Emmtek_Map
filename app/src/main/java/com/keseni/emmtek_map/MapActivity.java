@@ -74,6 +74,7 @@ public class MapActivity extends Activity {
     @Override
     protected void onResume() {
         super.onResume();
+        Globals.isVisible = true;
         setUpMapIfNeeded();
         // revisit the location data
         if(mMap != null)
@@ -167,6 +168,19 @@ public class MapActivity extends Activity {
         LatLng mLatLng = new LatLng(mDLat,mDLon);
         return mLatLng;
     }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        Globals.isVisible = false;
+    }
+//  @Override
+  //  public void onWindowFocusChanged(boolean hasFocus) {
+  //      super.onWindowFocusChanged(hasFocus);
+//
+  //      if (hasFocus)
+    //        Globals.isVisible = true;
+   // }
 
 
 

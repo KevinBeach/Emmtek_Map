@@ -24,7 +24,7 @@ import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 
 
-public class MapActivity extends Activity {
+public class MapActivity extends Activity implements GeoFenceDialog.OnOkSelectedListener{
 
     private static final String MAP_FRAGMENT_TAG = "map";
 
@@ -33,6 +33,8 @@ public class MapActivity extends Activity {
     private SharedPreferences sharedPreferences;
     private SharedPreferences.OnSharedPreferenceChangeListener listener;
     private Marker marker = null;
+    private Integer geoFenceRange = 50;
+    private Boolean geoAlarmOn = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -103,7 +105,7 @@ public class MapActivity extends Activity {
             public boolean onMarkerClick(Marker marker) {
                 FragmentManager fragmentManager = getFragmentManager();
                 final LocationDataDialog locationDataDialog = new LocationDataDialog();
-                locationDataDialog.show(fragmentManager,"locationdatadialog");
+                locationDataDialog.show(fragmentManager, "locationdatadialog");
                 return false;
             }
         });
@@ -145,6 +147,15 @@ public class MapActivity extends Activity {
             final LocationDataDialog locationDataDialog = new LocationDataDialog();
             locationDataDialog.show(fragmentManager,"locationdatadialog");
         }
+        if (id == R.id.action_geofence){
+            FragmentManager fragmentManager = getFragmentManager();
+            final GeoFenceDialog geoFenceDialog = new GeoFenceDialog();
+            Bundle bundle = new Bundle(); // bundle to send through existing geoFence, alarm status
+            bundle.putInt("geofencerange",geoFenceRange);
+            bundle.putBoolean("alarmon",geoAlarmOn);
+            geoFenceDialog.setArguments(bundle);
+            geoFenceDialog.show(fragmentManager,"geofencedialog");
+        }
 
         return super.onOptionsItemSelected(item);
     }
@@ -173,6 +184,13 @@ public class MapActivity extends Activity {
     protected void onPause() {
         super.onPause();
         Globals.isVisible = false;
+    }
+
+    @Override
+    public void itemsSelected(int geofenceRange, boolean alarmOn) {
+        Toast.makeText(this, geofenceRange + " " + alarmOn,Toast.LENGTH_LONG).show();
+        this.geoFenceRange = geofenceRange;
+        geoAlarmOn = alarmOn;
     }
 //  @Override
   //  public void onWindowFocusChanged(boolean hasFocus) {

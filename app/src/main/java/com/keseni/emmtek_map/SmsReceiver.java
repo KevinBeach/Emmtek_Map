@@ -84,14 +84,32 @@ public class SmsReceiver extends BroadcastReceiver {
                                 Intent i = new Intent(context, MapActivity.class);
                                 PendingIntent pi = PendingIntent.getActivity(context, 0, i, 0);
 
-                                Notification notification = new NotificationCompat.Builder(context)
+
+                                NotificationCompat.Builder builder = new NotificationCompat.Builder(context);
+                                builder.setTicker("Emmtek Data Received")
+                                        .setSmallIcon(R.drawable.ic_launcher)
+                                        .setContentTitle("SMS received")
+                                        .setContentIntent(pi)
+                                        .setAutoCancel(true);
+                                if(sharedPreferences.getBoolean("AlarmNotification",false)){
+                                    builder.setSound(Uri.parse("android.resource://com.keseni.emmtek_map/" + R.raw.alarm));
+                                }
+
+                                if (sharedPreferences.getBoolean("VibrateNotification",false)){
+                                    builder.setVibrate(new long[] {0,1000,1000,1000});
+                                }
+
+                                Notification notification = builder.build();
+
+
+/*                                Notification notification = new NotificationCompat.Builder(context)
                                         .setTicker("Emmtek Data Received")
                                         .setSmallIcon(R.drawable.ic_launcher)
                                         .setContentTitle("SMS received")
                                         .setContentIntent(pi)
                                         .setSound(Uri.parse("android.resource://com.keseni.emmtek_map/" + R.raw.alarm))
                                         .setAutoCancel(true)
-                                        .build();
+                                        .build();*/
                                 NotificationManager notificationManager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
                                 notificationManager.notify(0, notification);
                             }

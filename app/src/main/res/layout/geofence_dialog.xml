@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:paddingLeft="15dp"
+    android:paddingRight="15dp"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:paddingTop="30dp"
+        android:paddingBottom="50dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_weight="5"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:text="Geofence size (1-99)"
+            />
+
+    <NumberPicker
+        android:layout_weight="10"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/geofence_nbFenceSize"
+        android:layout_gravity="right" />
+
+
+
+    </LinearLayout>
+
+    <RadioButton
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Alarm ARMED"
+        android:id="@+id/geofence_rbAlarmArmed"
+        android:layout_gravity="left" />
+
+    <LinearLayout
+        android:paddingTop="75dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+    <Button
+        android:layout_weight="5"
+        android:padding="25dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="OK"
+        android:layout_gravity="left"
+        android:id="@+id/geofence_bOK" />
+
+    <Button
+        android:layout_weight="5"
+        android:padding="25dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Cancel"
+        android:id="@+id/geofence_bCancel"
+        android:layout_gravity="right" />
+    </LinearLayout>
+</LinearLayout>

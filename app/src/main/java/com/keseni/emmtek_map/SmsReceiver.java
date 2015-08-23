@@ -91,7 +91,7 @@ public class SmsReceiver extends BroadcastReceiver {
                                         .setContentTitle("SMS received")
                                         .setContentIntent(pi)
                                         .setAutoCancel(true);
-                                if(sharedPreferences.getBoolean("AlarmNotification",false)){
+                                if(sharedPreferences.getBoolean("SoundNotification",false)){
                                     builder.setSound(Uri.parse("android.resource://com.keseni.emmtek_map/" + R.raw.alarm));
                                 }
 
@@ -102,7 +102,7 @@ public class SmsReceiver extends BroadcastReceiver {
                                 Notification notification = builder.build();
 
 
-/*                                Notification notification = new NotificationCompat.Builder(context)
+                                /*Notification notification = new NotificationCompat.Builder(context)
                                         .setTicker("Emmtek Data Received")
                                         .setSmallIcon(R.drawable.ic_launcher)
                                         .setContentTitle("SMS received")

@@ -17,10 +17,17 @@
         android:paddingBottom="20dp"
         android:id="@+id/checkAlarmNotification" />
     <CheckBox
+        android:paddingBottom="20dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Vibration on notification"
         android:id="@+id/checkVibrate" />
+    <CheckBox
+        android:paddingBottom="20dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Sound on notification"
+        android:id="@+id/checkSound"/>
 
     <LinearLayout
         android:paddingTop="30dp"

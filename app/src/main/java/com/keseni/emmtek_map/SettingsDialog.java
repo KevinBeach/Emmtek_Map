@@ -20,6 +20,7 @@ public class SettingsDialog extends DialogFragment {
     CheckBox gpsNotification;
     CheckBox alarmNotification;
     CheckBox vibrate;
+    CheckBox sound;
     Button ok, cancel;
 
     @Override
@@ -33,11 +34,13 @@ public class SettingsDialog extends DialogFragment {
         gpsNotification = (CheckBox) view.findViewById(R.id.checkGPSNotification);
         alarmNotification = (CheckBox) view.findViewById(R.id.checkAlarmNotification);
         vibrate = (CheckBox) view.findViewById(R.id.checkVibrate);
+        sound = (CheckBox) view.findViewById(R.id.checkSound);
         ok = (Button) view.findViewById(R.id.setting_dialog_OK);
         cancel = (Button) view.findViewById(R.id.setting_dialog_Cancel);
         gpsNotification.setChecked(sharedPreferences.getBoolean("GpsNotification",true));
         alarmNotification.setChecked(sharedPreferences.getBoolean("AlarmNotification",true));
         vibrate.setChecked(sharedPreferences.getBoolean("VibrateNotification",true));
+        sound.setChecked(sharedPreferences.getBoolean("SoundNotification",true));
 
         ok.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -46,6 +49,7 @@ public class SettingsDialog extends DialogFragment {
                     editor.putBoolean("GpsNotification", gpsNotification.isChecked());
                     editor.putBoolean("AlarmNotification",alarmNotification.isChecked());
                     editor.putBoolean("VibrateNotification",vibrate.isChecked());
+                    editor.putBoolean("SoundNotification",sound.isChecked());
                 editor.commit();
                 dismiss();
             }
